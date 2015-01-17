@@ -1,9 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
@@ -51,19 +46,13 @@ actNoNA <- activity[complete.cases(activity),]
 totalbydate <- summarise(group_by(actNoNA,date), sum(steps))
 names(totalbydate) <- c("date","totals")
 ```
-
-```
-## Error in names(totalbydate) <- c("date", "totals"): 'names' attribute [2] must be the same length as the vector [1]
-```
 - Plot histogram of the total number of steps taken each day.
 
 ```r
 hist(totalbydate$totals, main = "Total Number of Steps Taken Each Day", xlab = "# Steps")
 ```
 
-```
-## Error in hist.default(totalbydate$totals, main = "Total Number of Steps Taken Each Day", : 'x' must be numeric
-```
+![](./PA1_assignment_files/figure-html/unnamed-chunk-5-1.png) 
 
 ### Part 2
 - Mean (see R output below):
@@ -73,7 +62,10 @@ summarise(totalbydate, mean(totals))
 ```
 
 ```
-## Error in mean(totals): object 'totals' not found
+## Source: local data frame [1 x 1]
+## 
+##   mean(totals)
+## 1     10766.19
 ```
 
 - Median (see R output below):
@@ -83,7 +75,10 @@ summarise(totalbydate, median(totals))
 ```
 
 ```
-## Error in median(totals): object 'totals' not found
+## Source: local data frame [1 x 1]
+## 
+##   median(totals)
+## 1          10765
 ```
 
 ## What is the average daily activity pattern?
@@ -109,9 +104,7 @@ p + geom_line(aes(group=1)) +
     labs(title = "Average Daily Activity Pattern")
 ```
 
-```
-## Error in seq.int(0, to0 - from, by): 'to' cannot be NA, NaN or infinite
-```
+![](./PA1_assignment_files/figure-html/unnamed-chunk-9-1.png) 
 
 ### Part 2
 - Determine the 5-minute interval that contains the maximum number of steps (see R output below):
@@ -123,7 +116,7 @@ maxstepdf$timeastime
 ```
 
 ```
-## character(0)
+## [1] "08:35"
 ```
 
 ## Imputing missing values
@@ -153,18 +146,7 @@ imputedactivity <- subset(imputedactivity, select = -avgsteps)
 
 ```r
 totalbydateIMP <- summarise(group_by(imputedactivity,date), sum(steps))
-```
-
-```
-## Error in sum(steps): invalid 'type' (character) of argument
-```
-
-```r
 names(totalbydateIMP) <- c("date","totals")
-```
-
-```
-## Error in names(totalbydateIMP) <- c("date", "totals"): object 'totalbydateIMP' not found
 ```
 - Plot histogram of the total number of steps taken each day using the imputed dataset.
 
@@ -172,9 +154,7 @@ names(totalbydateIMP) <- c("date","totals")
 hist(totalbydateIMP$totals, main = "Total Number of Steps Taken Each Day - Imputed Data", xlab = "# Steps")
 ```
 
-```
-## Error in hist(totalbydateIMP$totals, main = "Total Number of Steps Taken Each Day - Imputed Data", : object 'totalbydateIMP' not found
-```
+![](./PA1_assignment_files/figure-html/unnamed-chunk-14-1.png) 
 
 - Mean (see R output below):
 
@@ -183,7 +163,10 @@ summarise(totalbydateIMP, mean(totals))
 ```
 
 ```
-## Error in is.data.frame(.data): object 'totalbydateIMP' not found
+## Source: local data frame [1 x 1]
+## 
+##   mean(totals)
+## 1     10766.19
 ```
 
 - Median (see R output below):
@@ -193,7 +176,10 @@ summarise(totalbydateIMP, median(totals))
 ```
 
 ```
-## Error in is.data.frame(.data): object 'totalbydateIMP' not found
+## Source: local data frame [1 x 1]
+## 
+##   median(totals)
+## 1       10766.19
 ```
 
 - There is minimal difference between the mean/median of the imputed dataset vs the mean/median of the dataset with missing values excluded.  This is a direct result of the decision to use the average steps per interval to replace the NA values - the mean is preserved.  If different logic is used to replace the NA values, the means/medians could differ more significantly.
